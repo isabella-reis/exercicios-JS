@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { api } from "../../services/api";
-import { IFormData } from "./types";
 
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
@@ -11,18 +10,22 @@ import { Input } from "../../components/Input";
 import {
   Column,
   Container,
-  CreateText,
-  ForgotText,
   Row,
   SubtitleLogin,
   Title,
   TitleLogin,
   Wrapper,
+  Content,
+  LoginText,
 } from "./styles";
+import { IFormData } from "../login/types";
 
-
-const schema = yup
+const signUpSchema = yup
   .object({
+    nome: yup
+      .string()
+      .min(3, "Nome com no mínimo 3 caracteres")
+      .required("Campo obrigatório."),
     email: yup
       .string()
       .email("E-mail inválido.")
@@ -34,24 +37,39 @@ const schema = yup
   })
   .required();
 
-const Login = () => {
+const Cadastro = () => {
   const navigate = useNavigate();
+
+  const handleOnClickLogin = () => {
+    navigate("/login");
+  }
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<IFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signUpSchema),
     mode: "onChange",
   });
 
   const onSubmit = async (FormData: IFormData) => {
     try {
-      const { data } = await api.get(
-        `users?email=${FormData.email}&senha=${FormData.password}`
-      );
-      if (data.length === 1) {
+      if (isValid) {
+        const user = JSON.stringify({
+          nome: FormData.nome,
+          email: FormData.email,
+          password: FormData.password,
+        });
+        const customConfig = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const { data } = await api.post(`/users`, user, customConfig);
+        if (data.nome) {
+          alert(`${data.nome} cadastrado(a) com sucesso!`);
+        }
         navigate("/feed");
       } else {
         alert("Email ou senha inválido.");
@@ -61,13 +79,9 @@ const Login = () => {
     }
   };
 
-  const handleOnClickCadastro = () => {
-    navigate("/cadastro");
-  };
-
   return (
     <>
-      <Header />
+      <Header />;
       <Container>
         <Column>
           <Title>
@@ -77,9 +91,16 @@ const Login = () => {
         </Column>
         <Column>
           <Wrapper>
-            <TitleLogin>Faça seu cadastro</TitleLogin>
-            <SubtitleLogin>Faça seu login e make the change._</SubtitleLogin>
+            <TitleLogin>Comece agora grátis</TitleLogin>
+            <SubtitleLogin>Crie sua conta e make the change._</SubtitleLogin>
             <form onSubmit={handleSubmit(onSubmit)}>
+              <Input
+                name="nome"
+                errorMessage={errors?.nome?.message}
+                control={control}
+                placeholder="Nome Completo"
+                type="text"
+              />
               <Input
                 name="email"
                 errorMessage={errors?.email?.message}
@@ -94,13 +115,18 @@ const Login = () => {
                 placeholder="Senha"
                 type="password"
               />
-              <Button title="Entrar" variant="secondary" type="submit" />
+              <Button
+                title="Criar minha conta"
+                variant="secondary"
+                type="submit"
+              />
             </form>
             <Row>
-              <ForgotText>Esqueci minha senha</ForgotText>
-              <CreateText onClick={handleOnClickCadastro}>
-                Criar conta
-              </CreateText>
+              <Content>
+                Ao clicar em "criar minha conta grátis", declaro que aceito as
+                Políticas de Privacidade e os Termos de Uso da DIO.
+              </Content>
+              <LoginText onClick={handleOnClickLogin}>Já tenho conta. Fazer login</LoginText>
             </Row>
           </Wrapper>
         </Column>
@@ -109,4 +135,4 @@ const Login = () => {
   );
 };
 
-export { Login };
+export { Cadastro };

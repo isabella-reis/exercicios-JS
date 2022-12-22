@@ -13,7 +13,7 @@ export const Container = styled.main`
 `;
 
 export const Wrapper = styled.div`
-  max-width: 300px;
+  max-width: 350px;
 `;
 
 export const Column = styled.div`
@@ -55,24 +55,40 @@ export const SubtitleLogin = styled.p`
   margin-bottom: 35px;
   line-height: 25px;
 `;
-export const ForgotText = styled.p`
-  font-family: "Open Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 19px;
-  color: #e5e044;
-`;
-export const CreateText = styled.button`
-  font-family: "Open Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 19px;
-  color: #e23dd7;
 
-  background-color: transparent;
+export const Content = styled.p`
+  position: absolute;
+  width: 372px;
+  height: 75px;
+  left: 840px;
+  top: 580px;
+
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 25px;
+
+  color: #ffffff;
+`;
+
+export const LoginText = styled.button`
+  position: absolute;
+  width: 185px;
+  height: 19px;
+  left: 840px;
+  top: 670px;
+
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 19px;
+
   border: none;
+  background: linear-gradient(to right, white 0%, white 60%, #23dd7a 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 
   &:hover {
     cursor: pointer;
