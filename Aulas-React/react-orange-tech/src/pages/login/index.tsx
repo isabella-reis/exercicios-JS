@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { api } from "../../services/api";
-import { IFormData } from "./types";
 
 import { Button } from "../../components/Button";
 import { Header } from "../../components/Header";
@@ -19,7 +17,8 @@ import {
   TitleLogin,
   Wrapper,
 } from "./styles";
-
+import { api } from "../../services/api";
+import { IFormData } from "./types";
 
 const schema = yup
   .object({
@@ -36,6 +35,10 @@ const schema = yup
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const handleOnClickSignUp = () => {
+    navigate("/cadastro")
+  }
 
   const {
     control,
@@ -61,18 +64,14 @@ const Login = () => {
     }
   };
 
-  const handleOnClickCadastro = () => {
-    navigate("/cadastro");
-  };
-
   return (
     <>
-      <Header />
+      <Header/>
       <Container>
         <Column>
           <Title>
             A plataforma para você aprender com experts, dominar as principais
-            tecnologias e entrar mais rápido nas empresas mais desejadas.
+            tecnologias e entrar mais rápidos nas empresas mais desejadas.
           </Title>
         </Column>
         <Column>
@@ -98,9 +97,7 @@ const Login = () => {
             </form>
             <Row>
               <ForgotText>Esqueci minha senha</ForgotText>
-              <CreateText onClick={handleOnClickCadastro}>
-                Criar conta
-              </CreateText>
+              <CreateText onClick={handleOnClickSignUp}>Criar conta</CreateText>
             </Row>
           </Wrapper>
         </Column>

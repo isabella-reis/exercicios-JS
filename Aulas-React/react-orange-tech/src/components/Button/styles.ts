@@ -8,7 +8,7 @@ export const ButtonContainer = styled.button<IButtonStyled>`
   color: black;
   padding: 2px 12px;
   min-width: 120px;
-  width: 70%;
+  width: 80%;
   color: #fff;
 
   ${({ variant }) =>

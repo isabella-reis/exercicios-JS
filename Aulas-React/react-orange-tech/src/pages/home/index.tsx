@@ -10,7 +10,6 @@ const Home = () => {
   const handleClickSignIn = () => {
     navigate("/login");
   };
-
   return (
     <>
       <Header/>

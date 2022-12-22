@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { api } from "../../services/api";
@@ -42,7 +42,7 @@ const Cadastro = () => {
 
   const handleOnClickLogin = () => {
     navigate("/login");
-  }
+  };
 
   const {
     control,
@@ -126,7 +126,9 @@ const Cadastro = () => {
                 Ao clicar em "criar minha conta grátis", declaro que aceito as
                 Políticas de Privacidade e os Termos de Uso da DIO.
               </Content>
-              <LoginText onClick={handleOnClickLogin}>Já tenho conta. Fazer login</LoginText>
+              <LoginText onClick={handleOnClickLogin}>
+                Já tenho conta. Fazer login
+              </LoginText>
             </Row>
           </Wrapper>
         </Column>
